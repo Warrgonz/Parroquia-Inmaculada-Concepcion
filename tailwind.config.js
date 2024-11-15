@@ -19,6 +19,9 @@ module.exports = {
         },
       },
     },
+    maxWidth: {
+      "lg-container": "1250px",
+    },
   },
   plugins: [],
 };
