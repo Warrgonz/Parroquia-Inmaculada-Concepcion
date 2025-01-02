@@ -8,9 +8,23 @@
       rel="stylesheet"
       href="{{ url_for('static', filename='css/main.css') }}"
     />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Didact+Gothic&family=Pacifico&display=swap"
+      rel="stylesheet"
+    />
   </head>
-  <body>
+  <body class="bg-primary-950">
     {% include "components/navbar.html" %} {% block content %} {% endblock %}
     <script src="/static/js/app.js"></script>
+    <script
+      src="https://kit.fontawesome.com/4ccaae5e72.js"
+      crossorigin="anonymous"
+    ></script>
   </body>
 </html>
