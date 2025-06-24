@@ -1,0 +1,324 @@
+/* ESTILOS GENERALES */
+body {
+  font-family: "Poppins", sans-serif;
+  background: linear-gradient(135deg, #f1e1c1 0%, #4c3724 50%, #2a2623 100%);
+  color: #f1e1c1;
+}
+
+.main-container {
+  position: relative;
+  overflow: hidden;
+}
+
+.main-container::before {
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.05"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="80" fill="url(%23a)"/><circle cx="800" cy="300" r="120" fill="url(%23a)"/><circle cx="400" cy="700" r="100" fill="url(%23a)"/><circle cx="600" cy="150" r="60" fill="url(%23a)"/></svg>');
+  animation: float 25s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,
+  100% {
+    transform: translateY(0px) rotate(0deg);
+    opacity: 0.3;
+  }
+  50% {
+    transform: translateY(-30px) rotate(180deg);
+    opacity: 0.6;
+  }
+}
+
+/* ESTILOS DEL HERO */
+.hero-section {
+  position: relative;
+  padding: 120px 0;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  overflow: visible;
+}
+
+.decorative-elements {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.deco-cross {
+  position: absolute;
+  color: rgba(241, 225, 193, 0.08);
+  font-size: 8rem;
+  animation: spin 30s linear infinite;
+}
+.deco-cross:nth-child(1) {
+  top: 10%;
+  right: 5%;
+}
+.deco-cross:nth-child(2) {
+  bottom: 10%;
+  left: 5%;
+  font-size: 6rem;
+  animation-delay: 10s;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.page-tag {
+  background: linear-gradient(45deg, #4c3724, #2a2623);
+  color: #f1e1c1;
+  padding: 15px 30px;
+  border-radius: 50px;
+  font-size: 13px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 2px;
+  display: inline-block;
+  margin-bottom: 35px;
+  box-shadow: 0 10px 30px rgba(76, 55, 36, 0.4);
+  animation: pulse 3s ease-in-out infinite;
+  border: 2px solid rgba(241, 225, 193, 0.3);
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    transform: scale(1);
+    box-shadow: 0 10px 30px rgba(76, 55, 36, 0.4);
+  }
+  50% {
+    transform: scale(1.02);
+    box-shadow: 0 15px 40px rgba(76, 55, 36, 0.6);
+  }
+}
+
+.hero-title {
+  font-family: "Playfair Display", serif;
+  font-size: 4.5rem;
+  font-weight: 800;
+  color: #ffffff;
+  text-shadow: 0 4px 10px rgba(0, 0, 0, 0.7);
+  margin-bottom: 20px;
+}
+
+.hero-subtitle {
+  font-size: 1.5rem;
+  color: #f1e1c1;
+  text-shadow: 0 2px 5px rgba(0, 0, 0, 0.6);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* SECCIÓN DE DONACIONES */
+.donation-section {
+  padding: 100px 0;
+  position: relative;
+  z-index: 2;
+}
+
+.donation-box {
+  background: rgba(42, 38, 35, 0.5);
+  padding: 40px;
+  border-radius: 20px;
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(241, 225, 193, 0.2);
+  height: 100%;
+}
+
+.donation-box h3 {
+  font-family: "Playfair Display", serif;
+  color: #ffffff;
+  font-size: 2rem;
+  margin-bottom: 25px;
+  border-bottom: 2px solid rgba(241, 225, 193, 0.3);
+  padding-bottom: 15px;
+}
+
+.donation-info-item {
+  margin-bottom: 20px;
+}
+
+.info-label {
+  font-weight: 600;
+  color: #f1e1c1;
+  font-size: 1.1rem;
+  margin-bottom: 5px;
+}
+
+.info-value {
+  background: rgba(0, 0, 0, 0.3);
+  padding: 12px 15px;
+  border-radius: 10px;
+  color: #ffffff;
+  font-size: 1.2rem;
+  font-weight: 500;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.copy-btn {
+  background: none;
+  border: none;
+  color: rgba(241, 225, 193, 0.7);
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+.copy-btn:hover {
+  color: #ffffff;
+}
+
+.form-label {
+  color: #f1e1c1;
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.form-control {
+  background-color: rgba(0, 0, 0, 0.3);
+  border: 1px solid rgba(241, 225, 193, 0.3);
+  color: #f1e1c1;
+  border-radius: 10px;
+  padding: 12px 15px;
+}
+
+.form-control:focus {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: #ffffff;
+  border-color: #f1e1c1;
+  box-shadow: 0 0 0 0.25rem rgba(241, 225, 193, 0.25);
+}
+
+.drop-zone {
+  border: 2px dashed rgba(241, 225, 193, 0.4);
+  border-radius: 15px;
+  padding: 40px;
+  text-align: center;
+  color: rgba(241, 225, 193, 0.7);
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.drop-zone.dragover {
+  border-color: #f1e1c1;
+  background-color: rgba(241, 225, 193, 0.1);
+}
+
+.drop-zone__icon {
+  font-size: 3rem;
+  margin-bottom: 15px;
+  display: block;
+}
+
+.file-preview {
+  display: none; /* Oculto por defecto */
+  background: rgba(0, 0, 0, 0.3);
+  margin-top: 15px;
+  padding: 15px;
+  border-radius: 10px;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.file-preview.active {
+  display: flex;
+}
+
+.file-info {
+  color: #f1e1c1;
+}
+
+.file-info__name {
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 200px; /* Ajustar según sea necesario */
+}
+
+.file-info__size {
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+#remove-file-btn {
+  background: none;
+  border: none;
+  color: #ff6b6b;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+
+#remove-file-btn:hover {
+  color: #ff4757;
+}
+
+.submit-btn {
+  background: linear-gradient(45deg, #d4b790, #b2946c);
+  border: none;
+  color: #2a2623;
+  padding: 15px 40px;
+  font-weight: 700;
+  border-radius: 50px;
+  font-size: 18px;
+  transition: all 0.4s ease;
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+  width: 100%;
+}
+
+.submit-btn:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+  background: linear-gradient(45deg, #f1e1c1, #ffffff);
+  color: #2a2623;
+}
+
+#toast-message {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  background-color: #a7f3d0;
+  color: #2a2623;
+  padding: 15px 30px;
+  border-radius: 10px;
+  box-shadow: 0 5px 20px rgba(0, 0, 0, 0.3);
+  z-index: 1050;
+  opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.5s, visibility 0.5s;
+}
+#toast-message.show {
+  opacity: 1;
+  visibility: visible;
+}
+
+@media (max-width: 768px) {
+  .hero-title {
+    font-size: 3rem;
+  }
+  .hero-subtitle {
+    font-size: 1.2rem;
+  }
+  .donation-box {
+    margin-bottom: 30px;
+  }
+}

@@ -1,0 +1,216 @@
+{% extends "./layout/public_layout.html" %} {% set page = "Nosotros" %} {% block
+custom_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/donaciones.css') }}"
+/>
+{% endblock %} {% block content %}
+
+<main class="main-container">
+  <!-- SECCIÓN DEL HERO -->
+  <section class="hero-section">
+    <div class="decorative-elements">
+      <i class="fas fa-cross deco-cross"></i>
+      <i class="fas fa-cross deco-cross"></i>
+    </div>
+    <div class="container">
+      <span class="page-tag"
+        ><i class="fas fa-hand-holding-heart me-2"></i> Apoya Nuestra
+        Misión</span
+      >
+      <h1 class="hero-title">Tu Donación Transforma Vidas</h1>
+      <p class="hero-subtitle">
+        Cada ofrenda, grande o pequeña, es una semilla de esperanza que nos
+        permite continuar con nuestras obras de caridad, el mantenimiento de
+        nuestra casa común y la evangelización. ¡Gracias por tu generosidad!
+      </p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE DONACIONES -->
+  <section class="donation-section">
+    <div class="container">
+      <div class="row g-5">
+        <!-- Columna de Información -->
+        <div class="col-lg-6">
+          <div class="donation-box">
+            <h3>Canales de Donación</h3>
+            <p class="mb-4">
+              Puedes realizar tu ofrenda a través de los siguientes medios.
+              Agradecemos profundamente tu apoyo a la misión.
+            </p>
+
+            <div class="donation-info-item">
+              <div class="info-label">Número de Cuenta (IBAN)</div>
+              <div class="info-value">
+                <span id="iban-number">CR12015202001026284056</span>
+                <button
+                  class="copy-btn"
+                  onclick="copyToClipboard('iban-number')"
+                >
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="donation-info-item">
+              <div class="info-label">SINPE Móvil</div>
+              <div class="info-value">
+                <span id="sinpe-number">8888-8888</span>
+                <button
+                  class="copy-btn"
+                  onclick="copyToClipboard('sinpe-number')"
+                >
+                  <i class="fas fa-copy"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="donation-info-item">
+              <div class="info-label">A nombre de</div>
+              <div class="info-value">
+                <span>Parroquia Inmaculada Concepción</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Columna de Formulario -->
+        <div class="col-lg-6">
+          <div class="donation-box">
+            <h3>Reportar Donación</h3>
+            <form id="donation-form">
+              <div class="mb-3">
+                <label for="fullName" class="form-label">Nombre Completo</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="fullName"
+                  required
+                />
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" required />
+              </div>
+              <div class="mb-4">
+                <label for="file-upload" class="form-label"
+                  >Comprobante de Transferencia</label
+                >
+                <div id="drop-zone" class="drop-zone">
+                  <i class="fas fa-cloud-upload-alt drop-zone__icon"></i>
+                  <p>
+                    Arrastra y suelta el archivo aquí o haz clic para
+                    seleccionar
+                  </p>
+                </div>
+                <div id="file-preview" class="file-preview">
+                  <div class="file-info">
+                    <div id="file-name" class="file-info__name"></div>
+                    <div id="file-size" class="file-info__size"></div>
+                  </div>
+                  <button type="button" id="remove-file-btn">
+                    <i class="fas fa-times"></i>
+                  </button>
+                </div>
+                <input type="file" id="file-upload" hidden />
+              </div>
+              <button type="submit" class="btn submit-btn">
+                Enviar Reporte
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast-message"></div>
+
+<script>
+  // --- Lógica para el Drop Zone ---
+  const dropZone = document.getElementById("drop-zone");
+  const fileUpload = document.getElementById("file-upload");
+  const filePreview = document.getElementById("file-preview");
+  const fileNameDisplay = document.getElementById("file-name");
+  const fileSizeDisplay = document.getElementById("file-size");
+  const removeFileBtn = document.getElementById("remove-file-btn");
+
+  function handleFile(file) {
+    if (file) {
+      fileNameDisplay.textContent = file.name;
+      fileSizeDisplay.textContent = `${(file.size / 1024).toFixed(2)} KB`;
+      dropZone.style.display = "none";
+      filePreview.style.display = "flex";
+    }
+  }
+
+  function removeFile() {
+    fileUpload.value = ""; // Limpiar el input
+    dropZone.style.display = "block";
+    filePreview.style.display = "none";
+  }
+
+  dropZone.addEventListener("click", () => fileUpload.click());
+  removeFileBtn.addEventListener("click", removeFile);
+
+  dropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZone.classList.add("dragover");
+  });
+
+  dropZone.addEventListener("dragleave", () => {
+    dropZone.classList.remove("dragover");
+  });
+
+  dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("dragover");
+    if (e.dataTransfer.files.length) {
+      fileUpload.files = e.dataTransfer.files;
+      handleFile(e.dataTransfer.files[0]);
+    }
+  });
+
+  fileUpload.addEventListener("change", () => {
+    if (fileUpload.files.length) {
+      handleFile(fileUpload.files[0]);
+    }
+  });
+
+  // --- Lógica para Copiar al Portapapeles ---
+  function copyToClipboard(elementId) {
+    const textToCopy = document.getElementById(elementId).innerText;
+    const tempTextArea = document.createElement("textarea");
+    tempTextArea.value = textToCopy;
+    document.body.appendChild(tempTextArea);
+    tempTextArea.select();
+    document.execCommand("copy");
+    document.body.removeChild(tempTextArea);
+
+    showToast("¡Copiado al portapapeles!");
+  }
+
+  // --- Lógica para Toast Message ---
+  const toast = document.getElementById("toast-message");
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  }
+
+  // --- Lógica de envío de formulario ---
+  const donationForm = document.getElementById("donation-form");
+  donationForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // Aquí iría la lógica para enviar el formulario a un servidor
+    showToast("¡Gracias! Reporte enviado con éxito.");
+    donationForm.reset();
+    removeFile();
+  });
+</script>
+
+{% endblock %}

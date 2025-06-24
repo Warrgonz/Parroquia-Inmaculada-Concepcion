@@ -1,0 +1,224 @@
+{% block head %}
+<style>
+  .bg-lightvariant-yellow {
+    background-color: #f1e1c1;
+  }
+
+  .slider-wrapper {
+    position: relative;
+  }
+
+  .slider-container {
+    overflow: hidden;
+    background-color: #f1e1c1;
+    padding: 2rem 0;
+    position: relative;
+  }
+
+  .slider-track {
+    display: flex;
+    gap: 2rem;
+    width: max-content;
+  }
+
+  .grupo-card {
+    flex: 0 0 300px;
+    background-color: #fff;
+    color: #000;
+    border-radius: 1rem;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #ddd;
+    transition: transform 0.3s ease;
+  }
+
+  .grupo-card:hover {
+    transform: scale(1.03);
+  }
+
+  .card-img-top {
+    width: 100%;
+    height: 180px;
+    object-fit: cover;
+  }
+
+  .card-body {
+    padding: 1rem;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    color: #000;
+  }
+
+  .btn-warning {
+    background-color: #ffc107;
+    border: none;
+    color: #212529;
+    font-weight: bold;
+    margin-top: 1rem;
+  }
+
+  .btn-warning:hover {
+    background-color: #e0a800;
+  }
+
+  .titulo {
+    font-size: 1.75rem;
+    font-weight: 700;
+    margin-bottom: 1rem;
+    text-align: center;
+    color: #000;
+  }
+
+  .slider-btn {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    background-color: rgba(255, 255, 255, 0.8);
+    border: none;
+    font-size: 2rem;
+    cursor: pointer;
+    z-index: 2;
+    padding: 0 0.5rem;
+    border-radius: 50%;
+    color: #333;
+  }
+
+  .slider-btn:hover {
+    background-color: #ffc107;
+  }
+
+  .slider-btn.prev {
+    left: -10px;
+  }
+
+  .slider-btn.next {
+    right: -10px;
+  }
+</style>
+{% endblock %} {% block content %}
+<div class="bg-lightvariant-yellow">
+  <section class="container">
+    <div class="seccion-quienes-somos text-center mb-4">
+      <img
+        src="{{ url_for('static', filename='images/hr.png') }}"
+        alt="Ornamento religioso"
+        class="cruz-icono"
+      />
+      <div
+        class="titulo-con-lineas d-flex align-items-center justify-content-center gap-3"
+      >
+        <span class="linea flex-grow-1 bg-dark" style="height: 2px"></span>
+        <div class="d-flex flex-column">
+          <h3 class="titulo m-0">Grupos parroquiales</h3>
+          <p class="text-dark pt-4">
+            Lorem, ipsum dolor sit amet consectetur adipisicing elit. Nobis nemo
+            provident sequi qui voluptatibus delectus repudiandae voluptates
+            repellendus distinctio ipsam, error, eligendi dolores excepturi,
+            incidunt neque? A explicabo delectus soluta.
+          </p>
+        </div>
+
+        <span class="linea flex-grow-1 bg-dark" style="height: 2px"></span>
+      </div>
+    </div>
+
+    <div class="slider-wrapper">
+      <button class="slider-btn prev">&#10094;</button>
+      <button class="slider-btn next">&#10095;</button>
+
+      <div class="slider-container" id="slider-container">
+        <div class="slider-track" id="slider-track">
+          {% for i in range(2) %}
+          <div class="grupo-card">
+            <img
+              src="https://picsum.photos/400/180?random=1"
+              class="card-img-top"
+              alt="Grupo de Jóvenes"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Grupo de Jóvenes</h5>
+              <p class="card-text">Adolescentes que crecen en comunidad.</p>
+              <a href="#" class="btn btn-warning">Conocer más</a>
+            </div>
+          </div>
+
+          <div class="grupo-card">
+            <img
+              src="https://picsum.photos/400/180?random=2"
+              class="card-img-top"
+              alt="Grupo de Oración"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Grupo de Oración</h5>
+              <p class="card-text">Intercesión y alabanza semanal.</p>
+              <a href="#" class="btn btn-warning">Conocer más</a>
+            </div>
+          </div>
+
+          <div class="grupo-card">
+            <img
+              src="https://picsum.photos/400/180?random=3"
+              class="card-img-top"
+              alt="Ministerio de Música"
+            />
+            <div class="card-body">
+              <h5 class="card-title">Ministerio de Música</h5>
+              <p class="card-text">Servimos a Dios con canto y alabanza.</p>
+              <a href="#" class="btn btn-warning">Conocer más</a>
+            </div>
+          </div>
+          {% endfor %}
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+{% endblock %} {% block scripts %}
+<script>
+  const track = document.getElementById("slider-track");
+  const container = document.getElementById("slider-container");
+  const prevBtn = document.querySelector(".slider-btn.prev");
+  const nextBtn = document.querySelector(".slider-btn.next");
+
+  let paused = false;
+  let scrollStep = 1;
+  let cardWidth = 300 + 32; // width + gap
+  let duplicated = false;
+
+  // Evitar duplicación múltiple en caso de recarga doble
+  if (!duplicated) {
+    track.innerHTML += track.innerHTML;
+    duplicated = true;
+  }
+
+  function autoScroll() {
+    if (!paused) {
+      container.scrollLeft += scrollStep;
+
+      // Reinicio al punto medio exacto
+      const resetPoint = track.scrollWidth / 2;
+      if (container.scrollLeft >= resetPoint) {
+        container.scrollLeft = 0;
+      }
+    }
+
+    requestAnimationFrame(autoScroll);
+  }
+
+  container.addEventListener("mouseenter", () => (paused = true));
+  container.addEventListener("mouseleave", () => (paused = false));
+
+  nextBtn.addEventListener("click", () => {
+    container.scrollLeft += cardWidth;
+  });
+
+  prevBtn.addEventListener("click", () => {
+    container.scrollLeft -= cardWidth;
+  });
+
+  autoScroll();
+</script>
+{% endblock %}

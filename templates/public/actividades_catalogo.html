@@ -1,0 +1,361 @@
+{% extends "./layout/public_layout.html" %} {% set page = "Nosotros" %} {% block
+custom_css %}
+<!-- Font Awesome para los iconos -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+<!-- Flatpickr CSS -->
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css"
+/>
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/catalogo.css') }}"
+/>
+{% endblock %} {% block content %}
+
+<main class="main-container">
+  <!-- SECCIÓN DEL HERO -->
+  <section class="hero-section">
+    <div class="decorative-elements">
+      <i class="fas fa-cross deco-cross"></i>
+      <i class="fas fa-cross deco-cross"></i>
+    </div>
+    <div class="container">
+      <span class="page-tag"
+        ><i class="fas fa-star me-2"></i> Comunidad en Acción</span
+      >
+      <h1 class="hero-title">Catálogo de Actividades</h1>
+      <p class="hero-subtitle">
+        Encuentra y filtra las actividades de la parroquia para unirte a la que
+        más te llame la atención.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE FILTROS Y ACTIVIDADES -->
+  <section class="activities-section">
+    <div class="container">
+      <!-- Filtros -->
+      <div class="filters-container">
+        <div class="row g-3 align-items-end">
+          <div class="col-md-4">
+            <label for="filter-type" class="filter-label"
+              >Tipo de Actividad</label
+            >
+            <select id="filter-type" class="form-select filter-control">
+              <option value="all">Todas</option>
+              <option value="Jóvenes">Jóvenes</option>
+              <option value="Familia">Familia</option>
+              <option value="Apóstoles">Apóstoles</option>
+              <option value="Todo Público">Todo Público</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="filter-cost" class="filter-label">Costo</label>
+            <select id="filter-cost" class="form-select filter-control">
+              <option value="all">Todas</option>
+              <option value="gratis">Gratis</option>
+              <option value="paga">De Paga</option>
+            </select>
+          </div>
+          <div class="col-md-4">
+            <label for="filter-date-range" class="filter-label"
+              >Rango de Fechas</label
+            >
+            <div class="date-filter-wrapper">
+              <input
+                type="text"
+                id="filter-date-range"
+                class="form-control filter-control"
+                placeholder="Seleccione un rango..."
+              />
+              <button id="clear-date-filter">
+                <i class="fas fa-times-circle"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Catálogo de Actividades -->
+      <div class="activities-grid" id="activities-grid">
+        <!-- Tarjetas de ejemplo -->
+        <div
+          class="activity-card"
+          data-type="Jóvenes"
+          data-cost="paga"
+          data-date="2025-07-15"
+        >
+          <div class="activity-card__image-container">
+            <span class="activity-card__tag">Jóvenes</span>
+            <img
+              src="https://placehold.co/600x400/4c3724/f1e1c1?text=Retiro+Juvenil"
+              alt="Retiro"
+              class="activity-card__image"
+            />
+          </div>
+          <div class="activity-card__body">
+            <h3 class="activity-card__title">Retiro Juvenil "Kairos"</h3>
+            <p class="activity-card__description">
+              Un fin de semana para jóvenes de 15 a 18 años. Una oportunidad
+              única para encontrarte contigo mismo y con Dios.
+            </p>
+            <div class="activity-card__footer">
+              <div class="activity-card__meta">
+                <span class="activity-card__meta-item"
+                  ><i class="fas fa-users"></i
+                  ><span>35/50 Inscritos</span></span
+                ><span
+                  class="activity-card__meta-item activity-card__price--cost"
+                  ><i class="fas fa-coins"></i><span>₡15000</span></span
+                >
+              </div>
+              <a href="#" class="activity-card__button mt-3">Inscribirme</a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="activity-card"
+          data-type="Todo Público"
+          data-cost="gratis"
+          data-date="2025-08-01"
+        >
+          <div class="activity-card__image-container">
+            <span class="activity-card__tag">Todo Público</span>
+            <img
+              src="https://placehold.co/600x400/a38b70/FFFFFF?text=Café+Solidario"
+              alt="Café"
+              class="activity-card__image"
+            />
+          </div>
+          <div class="activity-card__body">
+            <h3 class="activity-card__title">Tarde de Café Solidario</h3>
+            <p class="activity-card__description">
+              Fondos recaudados para las obras de caridad de la parroquia. ¡Ven
+              a compartir!
+            </p>
+            <div class="activity-card__footer">
+              <div class="activity-card__meta">
+                <span class="activity-card__meta-item"
+                  ><i class="fas fa-users"></i
+                  ><span>Participación Abierta</span></span
+                ><span
+                  class="activity-card__meta-item activity-card__price--free"
+                  ><i class="fas fa-hand-holding-heart"></i
+                  ><span>Donación Voluntaria</span></span
+                >
+              </div>
+              <a href="#" class="activity-card__button mt-3">Participar</a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="activity-card"
+          data-type="Familia"
+          data-cost="gratis"
+          data-date="2025-08-10"
+        >
+          <div class="activity-card__image-container">
+            <span class="activity-card__tag">Familia</span>
+            <img
+              src="https://placehold.co/600x400/2a2623/f1e1c1?text=Cine+y+Oración"
+              alt="Cine"
+              class="activity-card__image"
+            />
+          </div>
+          <div class="activity-card__body">
+            <h3 class="activity-card__title">Noche de Cine y Oración</h3>
+            <p class="activity-card__description">
+              Proyección de una película con mensaje de fe, seguida de una
+              reflexión comunitaria.
+            </p>
+            <div class="activity-card__footer">
+              <div class="activity-card__meta">
+                <span class="activity-card__meta-item"
+                  ><i class="fas fa-users"></i
+                  ><span>82/100 Inscritos</span></span
+                ><span
+                  class="activity-card__meta-item activity-card__price--free"
+                  ><i class="fas fa-ticket"></i><span>Gratis</span></span
+                >
+              </div>
+              <a href="#" class="activity-card__button mt-3">Inscribirme</a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="activity-card"
+          data-type="Apóstoles"
+          data-cost="gratis"
+          data-date="2025-07-20"
+        >
+          <div class="activity-card__image-container">
+            <span class="activity-card__tag">Apóstoles</span>
+            <img
+              src="https://placehold.co/600x400/8c7a6b/FFFFFF?text=Lectura+Bíblica"
+              alt="Biblia"
+              class="activity-card__image"
+            />
+          </div>
+          <div class="activity-card__body">
+            <h3 class="activity-card__title">Círculo de Lectura Bíblica</h3>
+            <p class="activity-card__description">
+              Espacio semanal para profundizar en las Sagradas Escrituras y
+              reflexionar sobre el Evangelio.
+            </p>
+            <div class="activity-card__footer">
+              <div class="activity-card__meta">
+                <span class="activity-card__meta-item"
+                  ><i class="fas fa-users"></i
+                  ><span>15/25 Inscritos</span></span
+                ><span
+                  class="activity-card__meta-item activity-card__price--free"
+                  ><i class="fas fa-book-open"></i><span>Gratis</span></span
+                >
+              </div>
+              <a href="#" class="activity-card__button mt-3">Inscribirme</a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="activity-card"
+          data-type="Jóvenes"
+          data-cost="gratis"
+          data-date="2025-09-05"
+        >
+          <div class="activity-card__image-container">
+            <span class="activity-card__tag">Jóvenes</span>
+            <img
+              src="https://placehold.co/600x400/7a6a5f/FFFFFF?text=Voluntariado"
+              alt="Voluntariado"
+              class="activity-card__image"
+            />
+          </div>
+          <div class="activity-card__body">
+            <h3 class="activity-card__title">Jornada de Voluntariado</h3>
+            <p class="activity-card__description">
+              Únete a nosotros para ayudar en el comedor infantil de la
+              comunidad. Una mañana para servir a los demás.
+            </p>
+            <div class="activity-card__footer">
+              <div class="activity-card__meta">
+                <span class="activity-card__meta-item"
+                  ><i class="fas fa-users"></i
+                  ><span>10/20 Inscritos</span></span
+                ><span
+                  class="activity-card__meta-item activity-card__price--free"
+                  ><i class="fas fa-hands-helping"></i><span>Gratis</span></span
+                >
+              </div>
+              <a href="#" class="activity-card__button mt-3">Inscribirme</a>
+            </div>
+          </div>
+        </div>
+
+        <div
+          class="activity-card"
+          data-type="Todo Público"
+          data-cost="paga"
+          data-date="2025-09-20"
+        >
+          <div class="activity-card__image-container">
+            <span class="activity-card__tag">Todo Público</span>
+            <img
+              src="https://placehold.co/600x400/5b4e41/f1e1c1?text=Concierto"
+              alt="Concierto"
+              class="activity-card__image"
+            />
+          </div>
+          <div class="activity-card__body">
+            <h3 class="activity-card__title">Concierto de Alabanza</h3>
+            <p class="activity-card__description">
+              Una noche de música y adoración con el coro parroquial y artistas
+              invitados. ¡Te esperamos!
+            </p>
+            <div class="activity-card__footer">
+              <div class="activity-card__meta">
+                <span class="activity-card__meta-item"
+                  ><i class="fas fa-users"></i
+                  ><span>150/200 Inscritos</span></span
+                ><span
+                  class="activity-card__meta-item activity-card__price--cost"
+                  ><i class="fas fa-coins"></i><span>₡5000</span></span
+                >
+              </div>
+              <a href="#" class="activity-card__button mt-3">Comprar Entrada</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- Flatpickr JS -->
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script src="https://npmcdn.com/flatpickr/dist/l10n/es.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const filterType = document.getElementById("filter-type");
+    const filterCost = document.getElementById("filter-cost");
+    const clearDateBtn = document.getElementById("clear-date-filter");
+    const activitiesGrid = document.getElementById("activities-grid");
+    const cards = activitiesGrid.querySelectorAll(".activity-card");
+
+    const datePicker = flatpickr("#filter-date-range", {
+      mode: "range",
+      dateFormat: "Y-m-d",
+      locale: "es",
+      onChange: function (selectedDates) {
+        applyFilters();
+        clearDateBtn.style.display =
+          selectedDates.length > 0 ? "inline-block" : "none";
+      },
+    });
+
+    clearDateBtn.addEventListener("click", () => {
+      datePicker.clear();
+    });
+
+    function applyFilters() {
+      const typeValue = filterType.value;
+      const costValue = filterCost.value;
+      const selectedDates = datePicker.selectedDates;
+
+      cards.forEach((card) => {
+        const cardType = card.getAttribute("data-type");
+        const cardCost = card.getAttribute("data-cost");
+        const cardDate = new Date(card.getAttribute("data-date"));
+
+        const typeMatch = typeValue === "all" || typeValue === cardType;
+        const costMatch = costValue === "all" || costValue === cardCost;
+
+        let dateMatch = true;
+        if (selectedDates.length === 2) {
+          const startDate = selectedDates[0];
+          const endDate = new Date(selectedDates[1]);
+          endDate.setHours(23, 59, 59, 999);
+          dateMatch = cardDate >= startDate && cardDate <= endDate;
+        }
+
+        if (typeMatch && costMatch && dateMatch) {
+          card.classList.remove("hidden");
+        } else {
+          card.classList.add("hidden");
+        }
+      });
+    }
+
+    filterType.addEventListener("change", applyFilters);
+    filterCost.addEventListener("change", applyFilters);
+  });
+</script>
+
+{% endblock %}

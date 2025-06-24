@@ -1,0 +1,229 @@
+{% extends "./layout/public_layout.html" %} {% set page = "Nosotros" %} {% block
+custom_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/contacto.css') }}"
+/>
+{% endblock %} {% block content %}
+
+<main class="main-container">
+  <!-- SECCIÓN DEL HERO -->
+  <section class="hero-section">
+    <div class="decorative-elements">
+      <i class="fas fa-cross deco-cross"></i>
+      <i class="fas fa-cross deco-cross"></i>
+    </div>
+    <div class="container">
+      <span class="page-tag"
+        ><i class="fas fa-comments me-2"></i> Hablemos</span
+      >
+      <h1 class="hero-title">Ponte en Contacto</h1>
+      <p class="hero-subtitle">
+        Estamos aquí para escucharte. Si tienes alguna pregunta, necesitas apoyo
+        o deseas más información, no dudes en comunicarte con nosotros.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE CONTACTO -->
+  <section class="contact-section">
+    <div class="container">
+      <div class="row g-5">
+        <!-- Columna de Información -->
+        <div class="col-lg-6">
+          <div class="contact-box">
+            <h3>Información y Ubicación</h3>
+            <div class="map-container">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3930.450496512274!2d-84.09232061595326!3d9.89638606870231!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x8fa0e329cfaaaaab%3A0x32cd07eeae4b3a00!2sParroquia%20Inmaculada%20Concepci%C3%B3n%20de%20la%20Virgen%20Maria%2C!5e0!3m2!1ses-419!2scr!4v1750743017719!5m2!1ses-419!2scr"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+            </div>
+            <ul class="contact-info-list">
+              <li>
+                <i class="fas fa-phone-alt"></i>
+                <a href="tel:+50622222222">(+506) 2222-2222</a>
+              </li>
+              <li>
+                <i class="fas fa-envelope"></i>
+                <a href="mailto:info@parroquia.com">info@parroquia.com</a>
+              </li>
+              <li>
+                <i class="fas fa-clock"></i>
+                <span>Martes a Sábado: 9:00 AM - 5:00 PM</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Columna de Formulario -->
+        <div class="col-lg-6">
+          <div class="contact-box">
+            <h3>Envíanos tu Consulta</h3>
+            <form id="contact-form">
+              <div class="mb-3">
+                <label for="fullName" class="form-label">Nombre Completo</label>
+                <input
+                  type="text"
+                  class="form-control"
+                  id="fullName"
+                  required
+                />
+              </div>
+              <div class="row">
+                <div class="col-md-6 mb-3">
+                  <label for="cedula" class="form-label">Cédula</label>
+                  <input
+                    type="text"
+                    class="form-control"
+                    id="cedula"
+                    required
+                  />
+                </div>
+                <div class="col-md-6 mb-3">
+                  <label for="phone" class="form-label"
+                    >Número de Teléfono</label
+                  >
+                  <input type="tel" class="form-control" id="phone" required />
+                </div>
+              </div>
+              <div class="mb-3">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" required />
+              </div>
+              <div class="mb-4">
+                <label for="file-upload" class="form-label"
+                  >Adjuntar Archivos (Opcional)</label
+                >
+                <div id="drop-zone" class="drop-zone">
+                  <i class="fas fa-cloud-upload-alt drop-zone__icon"></i>
+                  <p>Arrastra y suelta o haz clic para seleccionar</p>
+                </div>
+                <div id="file-preview-container"></div>
+                <input type="file" id="file-upload" hidden multiple />
+              </div>
+              <button type="submit" class="btn submit-btn">
+                Enviar Consulta
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<div id="toast-message"></div>
+
+<script>
+  const dropZone = document.getElementById("drop-zone");
+  const fileUpload = document.getElementById("file-upload");
+  const filePreviewContainer = document.getElementById(
+    "file-preview-container"
+  );
+  const contactForm = document.getElementById("contact-form");
+
+  // Usamos un objeto DataTransfer para manejar los archivos
+  let dt = new DataTransfer();
+
+  function renderPreviews() {
+    filePreviewContainer.innerHTML = "";
+    if (dt.files.length > 0) {
+      dropZone.style.display = "none";
+    } else {
+      dropZone.style.display = "block";
+    }
+
+    for (let i = 0; i < dt.files.length; i++) {
+      const file = dt.files[i];
+      const filePreviewItem = document.createElement("div");
+      filePreviewItem.className = "file-preview-item";
+
+      const fileInfo = `
+                    <div class="file-info">
+                        <div class="file-info__name">${file.name}</div>
+                        <div class="file-info__size">${(
+                          file.size / 1024
+                        ).toFixed(2)} KB</div>
+                    </div>
+                `;
+
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "remove-file-btn";
+      removeBtn.innerHTML = '<i class="fas fa-times"></i>';
+      removeBtn.onclick = () => {
+        removeFile(i);
+      };
+
+      filePreviewItem.innerHTML = fileInfo;
+      filePreviewItem.appendChild(removeBtn);
+      filePreviewContainer.appendChild(filePreviewItem);
+    }
+    // Asignamos la lista de archivos actualizada al input
+    fileUpload.files = dt.files;
+  }
+
+  function handleFiles(files) {
+    for (const file of files) {
+      dt.items.add(file);
+    }
+    renderPreviews();
+  }
+
+  function removeFile(index) {
+    const newFiles = new DataTransfer();
+    for (let i = 0; i < dt.files.length; i++) {
+      if (i !== index) {
+        newFiles.items.add(dt.files[i]);
+      }
+    }
+    dt = newFiles; // Reemplazamos la lista de archivos
+    renderPreviews();
+  }
+
+  dropZone.addEventListener("click", () => fileUpload.click());
+
+  dropZone.addEventListener("dragover", (e) => {
+    e.preventDefault();
+    dropZone.classList.add("dragover");
+  });
+
+  dropZone.addEventListener("dragleave", () => {
+    dropZone.classList.remove("dragover");
+  });
+
+  dropZone.addEventListener("drop", (e) => {
+    e.preventDefault();
+    dropZone.classList.remove("dragover");
+    handleFiles(e.dataTransfer.files);
+  });
+
+  fileUpload.addEventListener("change", (e) => {
+    handleFiles(e.target.files);
+  });
+
+  // --- Lógica para Toast Message ---
+  const toast = document.getElementById("toast-message");
+  function showToast(message) {
+    toast.textContent = message;
+    toast.classList.add("show");
+    setTimeout(() => {
+      toast.classList.remove("show");
+    }, 3000);
+  }
+
+  // --- Lógica de envío de formulario ---
+  contactForm.addEventListener("submit", (e) => {
+    e.preventDefault();
+    // Aquí iría la lógica para enviar el formulario a un servidor con los archivos en dt.files
+    showToast("¡Gracias! Tu consulta ha sido enviada.");
+    contactForm.reset();
+    dt = new DataTransfer(); // Limpiar la lista de archivos
+    renderPreviews(); // Actualizar la vista
+  });
+</script>
+
+{% endblock %}

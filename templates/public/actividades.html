@@ -1,0 +1,189 @@
+{% extends "./layout/public_layout.html" %} {% set page = "Nosotros" %} {% block
+custom_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/actividades.css') }}"
+/>
+{% endblock %} {% block content %}
+
+<main class="main-container">
+  <!-- SECCIÓN DEL HERO -->
+  <section class="hero-section">
+    <div class="floating-elements">
+      <i class="fas fa-calendar-days floating-icon"></i>
+      <i class="fas fa-people-group floating-icon"></i>
+      <i class="fas fa-praying-hands floating-icon"></i>
+      <i class="fas fa-hand-holding-heart floating-icon"></i>
+    </div>
+    <div class="decorative-elements">
+      <i class="fas fa-cross deco-cross"></i>
+      <i class="fas fa-cross deco-cross"></i>
+    </div>
+    <div class="container">
+      <span class="page-tag"
+        ><i class="fas fa-star me-2"></i> Comunidad en Acción</span
+      >
+      <h1 class="hero-title">Participa y Vive tu Fe en Comunidad</h1>
+      <p class="hero-subtitle">
+        Descubre y únete a nuestras próximas actividades. Hay un lugar para ti
+        en nuestra familia parroquial.
+      </p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN DE ACTIVIDADES -->
+  <section class="activities-section">
+    <div class="container">
+      <div class="activities-grid">
+        <!-- Tarjeta de Actividad 1 -->
+        <div class="activity-card">
+          <div class="activity-card__image-container">
+            <span class="activity-card__tag">Confirmación</span>
+            <img
+              src="https://placehold.co/600x400/4c3724/f1e1c1?text=Retiro+Juvenil"
+              alt="Imagen de Retiro Juvenil"
+              class="activity-card__image"
+            />
+          </div>
+          <div class="activity-card__body">
+            <h3 class="activity-card__title">Retiro Juvenil</h3>
+            <p class="activity-card__description">
+              Un fin de semana de reflexión, oración y convivencia para jóvenes
+              de 15 a 18 años. Una oportunidad única para encontrarte contigo
+              mismo y con Dios.
+            </p>
+            <div class="activity-card__footer">
+              <div class="activity-card__meta">
+                <span class="activity-card__meta-item">
+                  <i class="fas fa-users"></i>
+                  <span>35 / 50 Inscritos</span>
+                </span>
+                <span
+                  class="activity-card__meta-item activity-card__price--cost"
+                >
+                  <i class="fas fa-coins"></i>
+                  <span>₡15000</span>
+                </span>
+              </div>
+              <a href="#" class="activity-card__button mt-3">Inscribirme</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Actividad 2 -->
+        <div class="activity-card">
+          <div class="activity-card__image-container">
+            <span class="activity-card__tag">Todo Público</span>
+            <img
+              src="https://placehold.co/600x400/a38b70/FFFFFF?text=Caf%C3%A9+Solidario"
+              alt="Imagen de una Tarde de Café"
+              class="activity-card__image"
+            />
+          </div>
+          <div class="activity-card__body">
+            <h3 class="activity-card__title">Tarde de Quiosco</h3>
+            <p class="activity-card__description">
+              Comparte una tarde amena con café y repostería. Todos los fondos
+              recaudados serán destinados a las obras de caridad de nuestra
+              parroquia.
+            </p>
+            <div class="activity-card__footer">
+              <div class="activity-card__meta">
+                <span class="activity-card__meta-item">
+                  <i class="fas fa-users"></i>
+                  <span>Participación Abierta</span>
+                </span>
+                <span
+                  class="activity-card__meta-item activity-card__price--free"
+                >
+                  <i class="fas fa-hand-holding-heart"></i>
+                  <span>Donación Voluntaria</span>
+                </span>
+              </div>
+              <a href="#" class="activity-card__button mt-3">Participar</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Actividad 3 -->
+        <div class="activity-card">
+          <div class="activity-card__image-container">
+            <span class="activity-card__tag">Apóstoles</span>
+            <img
+              src="https://placehold.co/600x400/2a2623/f1e1c1?text=Cine+y+Oraci%C3%B3n"
+              alt="Imagen de una noche de cine"
+              class="activity-card__image"
+            />
+          </div>
+          <div class="activity-card__body">
+            <h3 class="activity-card__title">Noche de Cine y Oración</h3>
+            <p class="activity-card__description">
+              Proyectaremos una película con un profundo mensaje de fe, seguida
+              de un breve espacio de reflexión y oración comunitaria. ¡No te lo
+              pierdas!
+            </p>
+            <div class="activity-card__footer">
+              <div class="activity-card__meta">
+                <span class="activity-card__meta-item">
+                  <i class="fas fa-users"></i>
+                  <span>82 / 100 Inscritos</span>
+                </span>
+                <span
+                  class="activity-card__meta-item activity-card__price--free"
+                >
+                  <i class="fas fa-ticket"></i>
+                  <span>Gratis</span>
+                </span>
+              </div>
+              <a href="#" class="activity-card__button mt-3">Inscribirme</a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Tarjeta de Actividad 4 -->
+        <div class="activity-card">
+          <div class="activity-card__image-container">
+            <span class="activity-card__tag">Lectores</span>
+            <img
+              src="https://placehold.co/600x400/8c7a6b/FFFFFF?text=Lectura+B%C3%ADblica"
+              alt="Imagen de un círculo de lectura"
+              class="activity-card__image"
+            />
+          </div>
+          <div class="activity-card__body">
+            <h3 class="activity-card__title">Círculo de Lectura Bíblica</h3>
+            <p class="activity-card__description">
+              Un espacio semanal para profundizar en las Sagradas Escrituras.
+              Nos reuniremos para leer, analizar y reflexionar juntos sobre el
+              Evangelio de la semana.
+            </p>
+            <div class="activity-card__footer">
+              <div class="activity-card__meta">
+                <span class="activity-card__meta-item">
+                  <i class="fas fa-users"></i>
+                  <span>15 / 25 Inscritos</span>
+                </span>
+                <span
+                  class="activity-card__meta-item activity-card__price--free"
+                >
+                  <i class="fas fa-book-open"></i>
+                  <span>Gratis</span>
+                </span>
+              </div>
+              <a href="#" class="activity-card__button mt-3">Inscribirme</a>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="view-all-btn-container">
+        <a href="/actividades/catalogo" class="btn view-all-btn"
+          >Ver todas las actividades disponibles
+          <i class="fas fa-arrow-right ms-2"></i
+        ></a>
+      </div>
+    </div>
+  </section>
+</main>
+
+{% endblock %}

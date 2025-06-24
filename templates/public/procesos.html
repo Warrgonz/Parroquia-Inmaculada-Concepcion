@@ -1,0 +1,227 @@
+{% extends "./layout/public_layout.html" %} {% set page = "Procesos" %} {% block
+custom_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/procesos.css') }}"
+/>
+{% endblock %} {% block content %}
+
+  </head>
+  <body>
+    <main class="main-container">
+      <!-- SECCIÓN DEL HERO (CÓDIGO EXISTENTE) -->
+      <section class="blog-section">
+        <div class="floating-elements">
+          <i class="fas fa-cross floating-icon"></i
+          ><i class="fas fa-church floating-icon"></i
+          ><i class="fas fa-dove floating-icon"></i
+          ><i class="fas fa-praying-hands floating-icon"></i
+          ><i class="fas fa-heart floating-icon"></i>
+        </div>
+        <div class="decorative-elements">
+          <i class="fas fa-cross deco-cross"></i
+          ><i class="fas fa-cross deco-cross"></i>
+          <div class="deco-circle"></div>
+          <div class="deco-circle"></div>
+        </div>
+        <div class="container content-container">
+          <div class="row align-items-center">
+            <div class="col-lg-6 col-md-12">
+              <div class="pe-lg-4">
+                <span class="blog-tag"
+                  ><i class="fas fa-church me-2"></i>PROCESOS PARROQUIALES</span
+                >
+                <h1 class="blog-title">
+                  Inicia tu Camino de Fe:
+                  <span style="color: #f1e1c1"
+                    >Únete a un Proceso Parroquial</span
+                  >
+                </h1>
+                <div class="author-info">
+                  <div class="author-avatar"><i class="fas fa-cross"></i></div>
+                  <div class="author-details">
+                    <div class="author-name">Equipo Pastoral</div>
+                    <div class="author-role">Ministerio de Comunicaciones</div>
+                  </div>
+                </div>
+                <div class="blessing-quote">
+                  <div class="blessing-text">
+                    "Donde dos o tres se reúnen en mi nombre, allí estoy yo en
+                    medio de ellos."
+                  </div>
+                  <div class="blessing-author">— Mateo 18:20</div>
+                </div>
+                <button class="btn subscribe-btn mt-4">
+                  <i class="fas fa-pen-to-square me-2"></i> Inscríbete a un
+                  Proceso Parroquial <i class="fas fa-arrow-right"></i>
+                </button>
+              </div>
+            </div>
+            <div class="col-lg-6 col-md-12 mt-4 mt-lg-0">
+              <div class="image-container">
+                <img
+                  src="/static/images/about1.jpg"
+                  alt="Iglesias históricas de Heredia"
+                  class="blog-image"
+                />
+                <div class="image-overlay"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN DE CONTENIDO DEL BLOG (PROCESOS) -->
+      <section class="content-section">
+        <div class="container">
+          <h2 class="article-title">Comprendiendo los Procesos Parroquiales</h2>
+          <p class="article-intro">
+            Los procesos parroquiales son los caminos de fe que marcan los
+            momentos más significativos en la vida de un creyente. Son más que
+            simples ritos; son sacramentos y preparaciones que nos unen a Dios y
+            a nuestra comunidad.
+          </p>
+          <div class="card-grid">
+            <div class="info-card">
+              <i class="fas fa-water info-card-icon"></i>
+              <h3 class="info-card-title">Bautismo</h3>
+              <p class="info-card-description">
+                El primer sacramento, la puerta de entrada a la vida cristiana.
+                A través del agua y el Espíritu Santo, somos liberados del
+                pecado y renacemos como hijos de Dios.
+              </p>
+            </div>
+            <div class="info-card">
+              <i class="fas fa-bread-slice info-card-icon"></i>
+              <h3 class="info-card-title">Primera Comunión</h3>
+              <p class="info-card-description">
+                Un encuentro sagrado donde recibimos por primera vez el Cuerpo y
+                la Sangre de Cristo, nutriendo nuestra alma y fortaleciendo
+                nuestra unión con Él.
+              </p>
+            </div>
+            <div class="info-card">
+              <i class="fas fa-dove info-card-icon"></i>
+              <h3 class="info-card-title">Confirmación</h3>
+              <p class="info-card-description">
+                Recibimos la plenitud del Espíritu Santo, que nos fortalece para
+                ser testigos de Cristo en el mundo, defendiendo y difundiendo la
+                fe con valentía.
+              </p>
+            </div>
+            <div class="info-card">
+              <i class="fas fa-ring info-card-icon"></i>
+              <h3 class="info-card-title">Matrimonio</h3>
+              <p class="info-card-description">
+                La alianza sagrada entre un hombre y una mujer, un sacramento
+                que refleja el amor de Cristo por su Iglesia y santifica la vida
+                familiar.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================== -->
+      <!-- ===== NUEVA SECCIÓN DE NIVELES DE INSCRIPCIÓN ===== -->
+      <!-- ================================================== -->
+      <section class="content-section" style="background: rgba(0, 0, 0, 0.1)">
+        <div class="container">
+          <h2 class="article-title">Encuentra tu Nivel de Catequesis</h2>
+          <p class="article-intro">
+            Para unirte a nuestra comunidad y crecer en la fe, es importante que
+            encuentres el grupo adecuado para ti o tus hijos. Aquí te
+            presentamos los diferentes niveles de catequesis disponibles para la
+            inscripción.
+          </p>
+          <div class="card-grid">
+            <!-- Tarjeta: Jugando y Cantando -->
+            <div class="info-card">
+              <i class="fas fa-music info-card-icon"></i>
+              <h3 class="info-card-title">Primer Nivel: Jugando y Cantando</h3>
+              <p class="info-card-description">
+                Ideal para los más pequeños en sus primeros años escolares, es
+                una transición a la vida parroquial con un acercamiento a la fe
+                a través de actividades lúdicas.
+              </p>
+              <p class="info-card-subtitle">Edades: 6 a 8 años</p>
+            </div>
+            <!-- Tarjeta: Diferenciada -->
+            <div class="info-card">
+              <i class="fas fa-users info-card-icon"></i>
+              <h3 class="info-card-title">Catequesis Diferenciada</h3>
+              <p class="info-card-description">
+                Diseñado para niños que no participaron en el primer nivel y
+                desean iniciar su camino de preparación para los sacramentos.
+              </p>
+              <p class="info-card-subtitle">Edades: 9 a 13 años</p>
+            </div>
+            <!-- Tarjeta: Catequesis Juvenil -->
+            <div class="info-card">
+              <i class="fas fa-book-open-reader info-card-icon"></i>
+              <h3 class="info-card-title">Catequesis Juvenil</h3>
+              <p class="info-card-description">
+                Grupo de perseverancia para quienes desean seguir creciendo en
+                su conocimiento y amor a Cristo después de su iniciación
+                sacramental.
+              </p>
+              <p class="info-card-subtitle">Edades: 11 a 13 años</p>
+              <p class="info-card-requirement">
+                Requisito: Haber hecho la Primera Comunión.
+              </p>
+            </div>
+            <!-- Tarjeta: SICA Juvenil -->
+            <div class="info-card">
+              <i class="fas fa-user-graduate info-card-icon"></i>
+              <h3 class="info-card-title">SICA Juvenil</h3>
+              <p class="info-card-description">
+                Un espacio para que los adolescentes profundicen en su fe,
+                compartan experiencias y se preparen para el sacramento de la
+                Confirmación.
+              </p>
+              <p class="info-card-subtitle">Edades: 14 a 17 años</p>
+            </div>
+            <!-- Tarjeta: SICA Adultos -->
+            <div class="info-card">
+              <i class="fas fa-user-tie info-card-icon"></i>
+              <h3 class="info-card-title">SICA Adultos</h3>
+              <p class="info-card-description">
+                Para adultos que desean iniciar o completar sus sacramentos
+                (Bautismo, Comunión, Confirmación) y enriquecer su vida
+                espiritual.
+              </p>
+              <p class="info-card-subtitle">Edades: 18 años en adelante</p>
+            </div>
+            <!-- Tarjeta: Catequesis Bautismal -->
+            <div class="info-card">
+              <i class="fas fa-hands-holding-child info-card-icon"></i>
+              <h3 class="info-card-title">Catequesis Bautismal</h3>
+              <p class="info-card-description">
+                Preparación indispensable para los padres y padrinos que
+                presentarán a sus hijos o ahijados para el sacramento del
+                Bautismo.
+              </p>
+              <p class="info-card-subtitle">Edades: 18 años en adelante</p>
+            </div>
+            <!-- Tarjeta: Catequesis Prematrimonial -->
+            <div class="info-card">
+              <i class="fas fa-heart info-card-icon"></i>
+              <h3 class="info-card-title">Catequesis Prematrimonial</h3>
+              <p class="info-card-description">
+                Curso de preparación esencial para las parejas que desean unirse
+                en el santo sacramento del Matrimonio, fortaleciendo su
+                compromiso ante Dios.
+              </p>
+              <p class="info-card-subtitle">Edades: 18 años en adelante</p>
+              <p class="info-card-requirement">
+                Requisitos: Bautismo, Primera Comunión y Confirmación.
+              </p>
+            </div>
+          </div>
+        </div>
+      </section>
+    </main>
+  </body>
+</html>
+
+{% endblock %}

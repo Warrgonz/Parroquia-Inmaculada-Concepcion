@@ -1,17 +1,640 @@
 {% extends "./layout/public_layout.html" %} {% set page = "Inicio" %} {% block
 content %}
 
-<body class="index-page">
-  <main class="main">
-    {# Sección principal de landing #}
-    <div>{% include 'components/landing/hero.html' %}</div>
-    <div>{% include 'components/landing/cta-hero.html' %}</div>
-    <div>{% include 'components/landing/about.html' %}</div>
-    <div>{% include 'components/landing/cta-about.html' %}</div>
-    <div>{% include 'components/landing/activities.html' %}</div>
-  </main>
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Inicio - Parroquia Inmaculada Concepción</title>
+    <!-- Bootstrap para el sistema de rejilla -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome para los iconos -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <!-- Google Fonts para la tipografía elegante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Swiper JS para el slider -->
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.css"
+    />
+    <style>
+      /* ESTILOS GENERALES */
+      body {
+        font-family: "Poppins", sans-serif;
+        background: #2a2623; /* Fallback color */
+        color: #f1e1c1;
+      }
 
-  {# Componentes comunes #}
-  <div>{% include 'components/common/scroll-top.html' %}</div>
-  <div>{% include 'components/footer.html' %} {% endblock %}</div>
-</body>
+      a {
+        text-decoration: none;
+      }
+
+      .main-container {
+        position: relative;
+        overflow: hidden;
+        background: linear-gradient(
+          135deg,
+          #f1e1c1 0%,
+          #4c3724 50%,
+          #2a2623 100%
+        );
+      }
+
+      .background-overlay {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="a" cx="50%" cy="50%"><stop offset="0%" stop-color="%23ffffff" stop-opacity="0.05"/><stop offset="100%" stop-color="%23ffffff" stop-opacity="0"/></radialGradient></defs><circle cx="200" cy="200" r="80" fill="url(%23a)"/><circle cx="800" cy="300" r="120" fill="url(%23a)"/><circle cx="400" cy="700" r="100" fill="url(%23a)"/><circle cx="600" cy="150" r="60" fill="url(%23a)"/></svg>');
+        animation: float 25s ease-in-out infinite;
+        z-index: 1;
+      }
+
+      @keyframes float {
+        0%,
+        100% {
+          transform: translateY(0px) rotate(0deg);
+          opacity: 0.3;
+        }
+        50% {
+          transform: translateY(-30px) rotate(180deg);
+          opacity: 0.6;
+        }
+      }
+
+      .decorative-elements {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 1;
+      }
+
+      .deco-cross {
+        position: absolute;
+        color: rgba(241, 225, 193, 0.08);
+        font-size: 12rem;
+        animation: spin 60s linear infinite;
+        z-index: 1;
+      }
+      .deco-cross.cross-1 {
+        top: 15%;
+        left: 5%;
+      }
+      .deco-cross.cross-2 {
+        top: 50%;
+        right: 10%;
+        font-size: 8rem;
+        animation-delay: 20s;
+      }
+      .deco-cross.cross-3 {
+        bottom: 20%;
+        left: 15%;
+        font-size: 6rem;
+        animation-delay: 40s;
+      }
+
+      @keyframes spin {
+        0% {
+          transform: rotate(0deg);
+        }
+        100% {
+          transform: rotate(360deg);
+        }
+      }
+
+      /* HERO SECTION */
+      .hero-section {
+        height: 100vh;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        color: white;
+        z-index: 2; /* Hero content is above background elements */
+      }
+
+      .hero-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        z-index: 1;
+      }
+
+      .hero-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(
+          to top,
+          rgba(42, 38, 35, 1) 0%,
+          rgba(42, 38, 35, 0.7) 50%,
+          rgba(42, 38, 35, 0.4) 100%
+        );
+        z-index: 2;
+      }
+
+      .hero-content {
+        position: relative;
+        z-index: 3;
+        animation: fadeIn 2s ease-out;
+      }
+
+      .hero-title {
+        font-family: "Playfair Display", serif;
+        font-size: 5rem;
+        font-weight: 800;
+        text-shadow: 0 5px 15px rgba(0, 0, 0, 0.7);
+      }
+
+      .hero-subtitle {
+        font-size: 1.5rem;
+        max-width: 700px;
+        margin: 20px auto 0;
+        opacity: 0.9;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: translateY(30px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      /* ESTILOS DE SECCIÓN */
+      .content-section {
+        padding: 100px 0;
+        position: relative;
+        z-index: 2;
+      }
+
+      .section-title {
+        font-family: "Playfair Display", serif;
+        font-size: 3.5rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 20px;
+        color: #f1e1c1;
+        text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.7);
+      }
+
+      .section-intro {
+        color: #eae0c9;
+        font-size: 1.2rem;
+        line-height: 1.8;
+        max-width: 850px;
+        margin: 0 auto 60px auto;
+        text-align: center;
+        text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+      }
+
+      .cta-button {
+        background: linear-gradient(45deg, #d4b790, #b2946c);
+        border: none;
+        color: #2a2623;
+        padding: 15px 40px;
+        font-weight: 700;
+        border-radius: 50px;
+        font-size: 18px;
+        transition: all 0.4s ease;
+        box-shadow: 0 12px 35px rgba(0, 0, 0, 0.4);
+        text-decoration: none;
+        display: inline-block;
+      }
+
+      .cta-button:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 16px 40px rgba(0, 0, 0, 0.6);
+        background: linear-gradient(45deg, #f1e1c1, #ffffff);
+        color: #2a2623;
+      }
+
+      /* SECCIÓN DE PROCESOS */
+      .process-card {
+        background: rgba(42, 38, 35, 0.5);
+        padding: 30px;
+        border-radius: 15px;
+        text-align: center;
+        border: 1px solid rgba(241, 225, 193, 0.2);
+        transition: all 0.3s ease;
+        height: 100%;
+      }
+      .process-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+      }
+      .process-card i {
+        font-size: 3rem;
+        color: #d4b790;
+        margin-bottom: 20px;
+      }
+      .process-card h4 {
+        font-family: "Playfair Display", serif;
+        color: #ffffff;
+        font-size: 1.5rem;
+      }
+
+      /* SECCIÓN DE ACTIVIDADES HORIZONTALES */
+      .activity-card {
+        background: rgba(42, 38, 35, 0.5);
+        border: 1px solid rgba(241, 225, 193, 0.2);
+        border-radius: 20px;
+        overflow: hidden;
+        display: flex;
+        transition: all 0.4s ease;
+        margin-bottom: 30px;
+      }
+      .activity-card:hover {
+        transform: translateY(-10px);
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.4);
+      }
+      .activity-card__image-container {
+        width: 250px;
+        height: auto;
+        flex-shrink: 0;
+      }
+      .activity-card__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+      .activity-card__body {
+        padding: 30px;
+      }
+      .activity-card__title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.5rem;
+        color: #ffffff;
+      }
+
+      /* SLIDER GRUPOS PARROQUIALES */
+      .swiper {
+        width: 100%;
+        padding-top: 20px;
+        padding-bottom: 50px;
+      }
+      .swiper-slide {
+        background-position: center;
+        background-size: cover;
+        width: 320px;
+        height: 420px;
+        background: #2a2623;
+        border-radius: 18px;
+        overflow: hidden;
+        box-shadow: 0 10px 40px rgba(0, 0, 0, 0.4);
+      }
+      .swiper-slide .group-card__image {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+        transition: transform 0.5s ease;
+      }
+      .swiper-slide:hover .group-card__image {
+        transform: scale(1.1);
+      }
+      .group-card__overlay {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(
+          to top,
+          rgba(0, 0, 0, 0.9) 0%,
+          transparent 100%
+        );
+        padding: 25px;
+        text-align: left;
+      }
+      .group-card__title {
+        font-family: "Playfair Display", serif;
+        font-size: 1.8rem;
+        color: #fff;
+        margin-bottom: 10px;
+      }
+      .group-card__description {
+        color: rgba(255, 255, 255, 0.8);
+        margin-bottom: 20px;
+      }
+      .group-card__button {
+        color: #2a2623;
+        background: #f1e1c1;
+        padding: 8px 18px;
+        border-radius: 50px;
+        text-decoration: none;
+        font-weight: 600;
+      }
+      .swiper-button-next,
+      .swiper-button-prev {
+        color: #f1e1c1;
+      }
+
+      @media (max-width: 768px) {
+        .hero-title {
+          font-size: 3.5rem;
+        }
+        .hero-subtitle {
+          font-size: 1.2rem;
+        }
+        .section-title {
+          font-size: 2.8rem;
+        }
+        .activity-card {
+          flex-direction: column;
+        }
+        .activity-card__image-container {
+          width: 100%;
+          height: 200px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <main class="main-container">
+      <div class="background-overlay"></div>
+      <div class="decorative-elements">
+        <i class="fas fa-cross deco-cross cross-1"></i>
+        <i class="fas fa-cross deco-cross cross-2"></i>
+        <i class="fas fa-cross deco-cross cross-3"></i>
+      </div>
+
+      <!-- HERO SECTION -->
+      <section class="hero-section">
+        <img
+          src="/static/images/HERO.jpg"
+          alt="Interior de la Parroquia"
+          class="hero-background"
+        />
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+          <h1 class="hero-title">Parroquia Inmaculada Concepción</h1>
+          <p class="hero-subtitle">
+            Un hogar para tu fe, una comunidad para tu corazón.
+          </p>
+        </div>
+      </section>
+
+      <!-- SECCIÓN QUIÉNES SOMOS -->
+      <section class="content-section" style="background: rgba(0, 0, 0, 0.1)">
+        <div class="container text-center">
+          <h2 class="section-title">¿Quiénes Somos?</h2>
+          <p class="section-intro">
+            Somos una familia unida por la fe, un punto de encuentro para
+            jóvenes y adultos que buscan crecer espiritualmente. Nuestra misión
+            es acoger a todos, anunciar con alegría la Buena Nueva y ser un faro
+            de esperanza en nuestra comunidad.
+          </p>
+          <a href="/nosotros" class="cta-button">Conoce Nuestra Historia</a>
+        </div>
+      </section>
+
+      <!-- SECCIÓN PROCESOS DISPONIBLES -->
+      <section class="content-section" style="background: rgba(0, 0, 0, 0.2)">
+        <div class="container text-center">
+          <h2 class="section-title">Inicia tu Camino de Fe</h2>
+          <p class="section-intro">
+            Los sacramentos son el corazón de nuestra vida cristiana. Te
+            acompañamos en cada paso de tu viaje espiritual, desde el inicio de
+            tu fe hasta los momentos más importantes de tu vida.
+          </p>
+          <div class="row g-4">
+            <div class="col-md-3">
+              <div class="process-card">
+                <i class="fas fa-water"></i>
+                <h4>Bautismo</h4>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="process-card">
+                <i class="fas fa-bread-slice"></i>
+                <h4>Primera Comunión</h4>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="process-card">
+                <i class="fas fa-dove"></i>
+                <h4>Confirmación</h4>
+              </div>
+            </div>
+            <div class="col-md-3">
+              <div class="process-card">
+                <i class="fas fa-ring"></i>
+                <h4>Matrimonio</h4>
+              </div>
+            </div>
+          </div>
+          <a href="/procesos" class="cta-button mt-5">Ver Todos los Procesos</a>
+        </div>
+      </section>
+
+      <!-- SECCIÓN CALENDARIO DE ACTIVIDADES -->
+      <section class="content-section" style="background: rgba(0, 0, 0, 0.1)">
+        <div class="container">
+          <h2 class="section-title text-center">Próximas Actividades</h2>
+          <p class="section-intro">
+            Mantente conectado con la vida de nuestra comunidad. Aquí
+            encontrarás algunas de nuestras próximas actividades diseñadas para
+            fortalecer la fe y la fraternidad.
+          </p>
+          <div class="row justify-content-center">
+            <div class="col-lg-10">
+              <div class="activity-card">
+                <div class="activity-card__image-container">
+                  <img
+                    src="https://placehold.co/600x400/4c3724/f1e1c1?text=Retiro"
+                    class="activity-card__image"
+                  />
+                </div>
+                <div class="activity-card__body">
+                  <h3 class="activity-card__title">Retiro Juvenil "Kairos"</h3>
+                  <p>
+                    Un fin de semana para encontrarte contigo mismo y con Dios,
+                    lleno de oración, reflexión y convivencia.
+                  </p>
+                </div>
+              </div>
+              <div class="activity-card">
+                <div class="activity-card__image-container">
+                  <img
+                    src="https://placehold.co/600x400/a38b70/FFFFFF?text=Café"
+                    class="activity-card__image"
+                  />
+                </div>
+                <div class="activity-card__body">
+                  <h3 class="activity-card__title">Tarde de Café Solidario</h3>
+                  <p>
+                    Disfruta de una tarde amena mientras apoyas las obras de
+                    caridad de nuestra parroquia.
+                  </p>
+                </div>
+              </div>
+              <div class="activity-card">
+                <div class="activity-card__image-container">
+                  <img
+                    src="https://placehold.co/600x400/2a2623/f1e1c1?text=Cine"
+                    class="activity-card__image"
+                  />
+                </div>
+                <div class="activity-card__body">
+                  <h3 class="activity-card__title">Noche de Cine y Oración</h3>
+                  <p>
+                    Una película con un mensaje inspirador, seguida de un
+                    momento para compartir y orar en comunidad.
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="text-center mt-5">
+            <a href="/actividades" class="cta-button"
+              >Ver Todas las Actividades</a
+            >
+          </div>
+        </div>
+      </section>
+
+      <!-- SECCIÓN GRUPOS PARROQUIALES -->
+      <section class="content-section" style="background: rgba(0, 0, 0, 0.2)">
+        <div class="container">
+          <h2 class="section-title text-center">Únete a un Grupo Parroquial</h2>
+          <p class="section-intro">
+            Descubre un espacio para compartir tu fe y tus talentos. Nuestros
+            grupos parroquiales son el corazón de nuestra comunidad y te esperan
+            con los brazos abiertos.
+          </p>
+          <div class="swiper">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide">
+                <img
+                  src="https://placehold.co/400x550/4c3724/f1e1c1?text=Apóstoles"
+                  class="group-card__image"
+                />
+                <div class="group-card__overlay">
+                  <h3 class="group-card__title">Apóstoles</h3>
+                  <p class="group-card__description">
+                    Jóvenes dedicados al servicio y la evangelización.
+                  </p>
+                  <a href="#" class="group-card__button">Leer Más</a>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="https://placehold.co/400x550/a38b70/FFFFFF?text=Monaguillos"
+                  class="group-card__image"
+                />
+                <div class="group-card__overlay">
+                  <h3 class="group-card__title">Monaguillos</h3>
+                  <p class="group-card__description">
+                    Niños y jóvenes al servicio del altar en la liturgia.
+                  </p>
+                  <a href="#" class="group-card__button">Leer Más</a>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="https://placehold.co/400x550/2a2623/f1e1c1?text=Coro"
+                  class="group-card__image"
+                />
+                <div class="group-card__overlay">
+                  <h3 class="group-card__title">Coro Parroquial</h3>
+                  <p class="group-card__description">
+                    Eleva tu voz en alabanza y únete a nuestro ministerio
+                    musical.
+                  </p>
+                  <a href="#" class="group-card__button">Leer Más</a>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="https://placehold.co/400x550/8c7a6b/FFFFFF?text=Lectores"
+                  class="group-card__image"
+                />
+                <div class="group-card__overlay">
+                  <h3 class="group-card__title">Lectores</h3>
+                  <p class="group-card__description">
+                    Proclama la Palabra de Dios en nuestras celebraciones.
+                  </p>
+                  <a href="#" class="group-card__button">Leer Más</a>
+                </div>
+              </div>
+              <div class="swiper-slide">
+                <img
+                  src="https://placehold.co/400x550/5b4e41/f1e1c1?text=Catequistas"
+                  class="group-card__image"
+                />
+                <div class="group-card__overlay">
+                  <h3 class="group-card__title">Catequistas</h3>
+                  <p class="group-card__description">
+                    Forma en la fe a las nuevas generaciones de nuestra
+                    comunidad.
+                  </p>
+                  <a href="#" class="group-card__button">Leer Más</a>
+                </div>
+              </div>
+            </div>
+            <!-- Add Pagination -->
+            <div class="swiper-pagination"></div>
+            <!-- Add Navigation -->
+            <div class="swiper-button-prev"></div>
+            <div class="swiper-button-next"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+    <script>
+      const swiper = new Swiper(".swiper", {
+        effect: "coverflow",
+        grabCursor: true,
+        centeredSlides: true,
+        slidesPerView: "auto",
+        loop: true,
+        coverflowEffect: {
+          rotate: 50,
+          stretch: 0,
+          depth: 100,
+          modifier: 1,
+          slideShadows: true,
+        },
+        autoplay: {
+          delay: 3000,
+          disableOnInteraction: false,
+        },
+        pagination: {
+          el: ".swiper-pagination",
+        },
+        navigation: {
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        },
+      });
+    </script>
+  </body>
+</html>
+{% endblock %}

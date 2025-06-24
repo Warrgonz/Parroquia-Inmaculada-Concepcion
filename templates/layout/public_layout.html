@@ -28,6 +28,19 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.3.0/font/bootstrap-icons.css"
     />
+
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <!-- Google Fonts para la tipografía elegante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    {% block custom_css %}{% endblock %}
   </head>
   <body class="bg-primary-950">
     {% include "components/nav.html" %} {% block content %} {% endblock %}
@@ -56,5 +69,38 @@
       nomodule
       src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
     ></script>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", function () {
+        "use strict";
+
+        // Obtiene la ruta de la URL actual (ej. "/procesos", "/actividades")
+        const currentPath = window.location.pathname;
+
+        // Obtiene todos los enlaces del menú de navegación
+        const navLinks = document.querySelectorAll("#navmenu a");
+
+        // Quita la clase 'active' por defecto que pueda tener el HTML
+        const activeLink = document.querySelector("#navmenu .active");
+        if (activeLink) activeLink.classList.remove("active");
+
+        // Recorre cada enlace para ver si coincide con la ruta actual
+        navLinks.forEach((link) => {
+          // Si el href del enlace es igual a la ruta actual...
+          if (link.getAttribute("href") === currentPath) {
+            // ...le añade la clase 'active' para resaltarlo.
+            link.classList.add("active");
+          }
+        });
+
+        // Caso especial para la página de inicio, que a veces es solo "/"
+        if (currentPath === "/") {
+          const homeLink = document.querySelector('#navmenu a[href="/"]'); // o el href que genere tu url_for para el inicio
+          if (homeLink) homeLink.classList.add("active");
+        }
+      });
+    </script>
+
+    {% block custom_js %}{% endblock %}
   </body>
 </html>

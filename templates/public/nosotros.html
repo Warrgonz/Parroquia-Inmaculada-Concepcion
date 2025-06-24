@@ -1,6 +1,138 @@
 {% extends "./layout/public_layout.html" %} {% set page = "Nosotros" %} {% block
-content %}
-<section>
-  <h1>Soy nosotros</h1>
-</section>
+custom_css %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/nosotros.css') }}"
+/>
+{% endblock %} {% block content %}
+<main class="main-container">
+  <!-- SECCIÓN DEL HERO -->
+  <section class="hero-section">
+    <div class="floating-elements">
+      <i class="fas fa-cross floating-icon"></i>
+      <i class="fas fa-church floating-icon"></i>
+      <i class="fas fa-dove floating-icon"></i>
+      <i class="fas fa-praying-hands floating-icon"></i>
+    </div>
+    <div class="decorative-elements">
+      <i class="fas fa-cross deco-cross"></i>
+      <i class="fas fa-cross deco-cross"></i>
+    </div>
+    <div class="container">
+      <div class="container">
+        <span class="page-tag"
+          ><i class="fas fa-users me-2"></i> Sobre Nosotros</span
+        >
+        <h1 class="hero-title">Nuestra Comunidad: Historia y Misión</h1>
+        <p class="hero-subtitle">
+          Una familia de discípulos misioneros de Cristo, que acoge a todos y
+          anuncia con alegría la Buena Nueva.
+        </p>
+    </div>
+  </section>
+
+  <!-- SECCIÓN NUESTRA HISTORIA -->
+  <section class="content-section">
+    <div class="container">
+      <div class="row justify-content-center">
+        <div class="col-lg-10 text-center">
+          <h2 class="section-title">Una Parroquia para Todos</h2>
+          <div class="history-content">
+            <p>
+              Somos una parroquia vibrante y con un corazón joven, firmemente
+              orientada a ser un faro de esperanza y un hogar espiritual para
+              todos, especialmente para las nuevas generaciones. Creemos que los
+              jóvenes no son solo el futuro de la Iglesia, sino su presente vivo
+              y dinámico. Por ello,
+              <strong
+                >incentivamos activamente a que los jóvenes y todas las personas
+                interesadas se sumen a nuestros grupos y ministerios.</strong
+              >
+            </p>
+            <p>
+              Buscamos crear un espacio donde cada persona pueda descubrir sus
+              dones, crecer en su fe y ponerlos al servicio de los demás. Te
+              invitamos a formar parte de esta familia, a caminar juntos y a
+              contribuir con tu energía y tu espíritu a la misión que el Señor
+              nos ha encomendado. <strong>¡Tu lugar está aquí!</strong>
+            </p>
+          </div>
+
+          <a href="/contactenos" class="btn cta-btn mt-4"
+            ><i class="fas fa-paper-plane me-2"></i> Contáctenos
+            <i class="fas fa-arrow-right ms-2"></i
+          ></a>
+
+          <div class="historical-quote text-start">
+            <h3 class="historical-quote-title">
+              El Nacimiento de Nuestra Comunidad
+            </h3>
+            <p class="historical-quote-text">
+              Tras numerosas solicitudes del pueblo y con una visión de gran
+              potencial pastoral, nuestra comunidad fue oficialmente erigida.
+              <strong
+                >Fue Monseñor Enrique Bolaños Quesada quien, el 8 de Diciembre
+                de 1978, firmó el decreto de creación,</strong
+              >
+              asignando como primer Cura Párroco al Presbítero Luis Diego Sáenz
+              Salazar, marcando así el inicio de una floreciente historia de fe.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECCIÓN LO QUE NOS GUÍA -->
+  <section class="content-section guiding-principles">
+    <div class="container">
+      <h2 class="section-title">Lo que nos Guía</h2>
+      <div class="row">
+        <div class="col-lg-6 mb-4">
+          <div class="principle-item h-100">
+            <h3 class="principle-title">Propósito</h3>
+            <p class="principle-text">
+              "Compartir la experiencia, la felicidad y la plenitud de vida que
+              brota del encuentro con Jesús".
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+          <div class="principle-item h-100">
+            <h3 class="principle-title">Visión</h3>
+            <p class="principle-text">
+              Somos una familia de discípulos misioneros de Cristo, que acoge a
+              todos y anuncia con alegría la Buena Nueva.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+          <div class="principle-item h-100">
+            <h3 class="principle-title">Objetivo</h3>
+            <p class="principle-text">
+              Consolidar un camino renovado de evangelización que suscite
+              discípulos misioneros al servicio del Reino de la Vida.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-6 mb-4">
+          <div class="principle-item h-100">
+            <h3 class="principle-title">Meta</h3>
+            <p class="principle-text">
+              Pequeñas comunidades parroquiales de fe, culto y amor.
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-12">
+          <div class="principle-item text-center">
+            <h3 class="principle-title">Lema</h3>
+            <p class="principle-text">
+              Iglesia: comunión, participación y misión.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 {% endblock %}
