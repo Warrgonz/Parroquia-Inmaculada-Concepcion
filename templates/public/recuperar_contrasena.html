@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Recuperar Contraseña - Parroquia Inmaculada Concepción</title>
+    <!-- Bootstrap para el sistema de rejilla -->
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <!-- Font Awesome para los iconos -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <!-- Google Fonts para la tipografía elegante -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;800&family=Poppins:wght@400;600;700&display=swap"
+      rel="stylesheet"
+    />
+    <!-- Cloudflare Turnstile Script -->
+    <script
+      src="https://challenges.cloudflare.com/turnstile/v0/api.js"
+      defer
+    ></script>
+    <style>
+      body,
+      html {
+        height: 100%;
+        margin: 0;
+        font-family: "Poppins", sans-serif;
+        color: #f1e1c1;
+      }
+
+      .reset-container {
+        height: 100vh;
+        width: 100vw;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        position: relative;
+        overflow: hidden;
+      }
+
+      .reset-background {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background-image: url("/static/images/bg-hero-login.png");
+        background-size: cover;
+        background-position: center;
+        animation: zoomEffect 20s infinite alternate;
+      }
+
+      @keyframes zoomEffect {
+        from {
+          transform: scale(1);
+        }
+        to {
+          transform: scale(1.1);
+        }
+      }
+
+      .reset-overlay {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(42, 38, 35, 0.7);
+        backdrop-filter: blur(5px);
+        -webkit-backdrop-filter: blur(5px);
+      }
+
+      .reset-box {
+        position: relative;
+        z-index: 2;
+        background: rgba(42, 38, 35, 0.6);
+        padding: 50px;
+        border-radius: 20px;
+        backdrop-filter: blur(15px);
+        -webkit-backdrop-filter: blur(15px);
+        border: 1px solid rgba(241, 225, 193, 0.2);
+        width: 100%;
+        max-width: 480px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        animation: fadeIn 1s ease-out;
+        text-align: center;
+      }
+
+      @keyframes fadeIn {
+        from {
+          opacity: 0;
+          transform: scale(0.95);
+        }
+        to {
+          opacity: 1;
+          transform: scale(1);
+        }
+      }
+
+      .reset-icon {
+        font-size: 4rem;
+        color: #d4b790;
+        margin-bottom: 25px;
+      }
+
+      .reset-title {
+        font-family: "Playfair Display", serif;
+        text-align: center;
+        font-size: 2.5rem;
+        margin-bottom: 15px;
+        color: #ffffff;
+      }
+
+      .reset-text {
+        font-size: 1.1rem;
+        color: rgba(241, 225, 193, 0.9);
+        margin-bottom: 30px;
+      }
+
+      .form-label {
+        font-weight: 600;
+        text-align: left;
+        display: block;
+        width: 100%;
+      }
+
+      .form-control {
+        background-color: rgba(0, 0, 0, 0.4);
+        border: 1px solid rgba(241, 225, 193, 0.3);
+        color: #f1e1c1;
+        border-radius: 10px;
+        padding: 12px 15px;
+      }
+
+      .form-control:focus {
+        background-color: rgba(0, 0, 0, 0.5);
+        color: #ffffff;
+        border-color: #f1e1c1;
+        box-shadow: 0 0 0 0.25rem rgba(241, 225, 193, 0.25);
+      }
+
+      .reset-btn {
+        background: linear-gradient(45deg, #d4b790, #b2946c);
+        border: none;
+        color: #2a2623;
+        padding: 12px;
+        font-weight: 700;
+        border-radius: 10px;
+        font-size: 18px;
+        transition: all 0.4s ease;
+        width: 100%;
+      }
+
+      .reset-btn:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
+      }
+
+      .back-to-login {
+        display: block;
+        text-align: center;
+        margin-top: 25px;
+        color: rgba(241, 225, 193, 0.8);
+        text-decoration: none;
+        font-weight: 600;
+        transition: color 0.3s;
+      }
+
+      .back-to-login:hover {
+        color: #ffffff;
+      }
+
+      .turnstile-container {
+        margin: 30px auto;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="reset-container">
+      <div class="reset-background"></div>
+      <div class="reset-overlay"></div>
+
+      <div class="reset-box">
+        <i class="fas fa-envelope-circle-check reset-icon"></i>
+        <h2 class="reset-title">Recuperar Contraseña</h2>
+        <p class="reset-text">
+          Ingresa tu correo electrónico y te enviaremos un enlace para
+          restablecer tu contraseña.
+        </p>
+
+        <form>
+          <div class="mb-3">
+            <label for="email" class="form-label">Correo Electrónico</label>
+            <input type="email" class="form-control" id="email" required />
+          </div>
+
+          <!-- Cloudflare Turnstile Widget -->
+          <div class="turnstile-container">
+            <div
+              class="cf-turnstile"
+              data-sitekey="1x00000000000000000000AA"
+              data-theme="dark"
+            ></div>
+          </div>
+
+          <button type="submit" class="reset-btn">
+            <a href="{{ url_for('seguridad.cambiar_contrasena') }}">
+              Enviar Enlace de Recuperación</a
+            >
+          </button>
+
+          <a href="{{ url_for('seguridad.login') }}" class="back-to-login"
+            ><i class="fas fa-arrow-left me-2"></i> Volver a Iniciar Sesión</a
+          >
+        </form>
+      </div>
+    </div>
+  </body>
+</html>

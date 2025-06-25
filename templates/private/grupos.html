@@ -1,0 +1,24 @@
+{% extends "private/private_layout.html" %} {% block title %}Gestión de Usuarios
+- Parroquia{% endblock %} {% block head_extra %}
+<style>
+  /* Puedes agregar estilos específicos para esta página si es necesario */
+</style>
+{% endblock %} {% block sidebar_menu_items %} {# Aquí podrías agregar items
+adicionales al menú lateral si son específicos de alguna vista #}
+<script>
+  // Resalta el enlace "Usuarios" en el sidebar
+  document.addEventListener("DOMContentLoaded", function () {
+    const sidebarLinks = document.querySelectorAll("#sidebar ul li a");
+    sidebarLinks.forEach((link) => {
+      if (link.getAttribute("href") === '{{ url_for("grupos.grupos") }}') {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
+  });
+</script>
+{% endblock %} {% block content %}
+
+<h1>lol</h1>
+{% endblock %} {% block scripts_extra %} {% endblock %}

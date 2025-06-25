@@ -1,0 +1,173 @@
+{% extends "private/private_layout.html" %} {% block title %}Gestión de
+Actividades - Parroquia{% endblock %} {% block head_extra %}
+<link
+  rel="stylesheet"
+  href="{{ url_for('static', filename='css/actividades_dashboard.css') }}"
+/>
+{% endblock %} {% block sidebar_menu_items %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const sidebarLinks = document.querySelectorAll("#sidebar ul li a");
+    sidebarLinks.forEach((link) => {
+      // Asegúrate de usar el endpoint correcto para tu ruta de actividades
+      // Asumo que tu blueprint de actividades se llama 'actividades' y la función 'calendario'
+      if (link.getAttribute("href") === '{{ url_for("actividades.admin") }}') {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
+  });
+</script>
+{% endblock %} {% block content %}
+<div class="page-header">
+  <h2 class="page-title">Gestión de Actividades</h2>
+  <a href="#" class="btn btn-add">
+    <i class="fas fa-plus me-2"></i> Agregar Actividad
+  </a>
+</div>
+<div class="title-divider"></div>
+
+<div class="calendar-container">
+  <div id="calendar"></div>
+</div>
+
+{# Event Details Modal #}
+<div
+  class="modal fade"
+  id="eventDetailModal"
+  tabindex="-1"
+  aria-labelledby="eventDetailModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="eventDetailModalLabel">
+          Detalles del Evento
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <div class="row">
+          <div class="col-md-5">
+            <img
+              id="modalImage"
+              src=""
+              alt="Imagen de la Actividad"
+              class="img-fluid mb-3 rounded"
+            />
+          </div>
+          <div class="col-md-7">
+            <h3 id="modalTitle" class="page-title"></h3>
+            <p id="modalDescription" class="mt-3"></p>
+            <hr style="border-color: rgba(241, 225, 193, 0.2)" />
+            <div class="modal-details">
+              <p>
+                <strong><i class="fas fa-calendar-alt"></i> Fecha:</strong>
+                <span id="modalDate"></span>
+              </p>
+              <p>
+                <strong><i class="fas fa-clock"></i> Hora:</strong>
+                <span id="modalTime"></span>
+              </p>
+              <p>
+                <strong><i class="fas fa-tag"></i> Grupo:</strong>
+                <span id="modalGroup"></span>
+              </p>
+              <p>
+                <strong><i class="fas fa-users"></i> Participantes:</strong>
+                <span id="modalParticipants"></span>
+              </p>
+              <p>
+                <strong><i class="fas fa-coins"></i> Costo:</strong>
+                <span id="modalCost"></span>
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+{% endblock %} {% block scripts_extra %}
+<script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.11/index.global.min.js"></script>
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // FullCalendar Initialization
+    var calendarEl = document.getElementById("calendar");
+    var eventDetailModal = new bootstrap.Modal(
+      document.getElementById("eventDetailModal")
+    );
+
+    var calendar = new FullCalendar.Calendar(calendarEl, {
+      locale: "es",
+      headerToolbar: {
+        left: "prev,next today",
+        center: "title",
+        right: "dayGridMonth,timeGridWeek,timeGridDay",
+      },
+      initialDate: "2025-07-01", // Puedes ajustar la fecha inicial si lo deseas
+      navLinks: true,
+      selectable: true,
+      editable: true,
+      dayMaxEvents: true, // permite el enlace "más" cuando hay muchos eventos
+      eventClassNames: function (arg) {
+        if (arg.event.extendedProps.type === "reminder") {
+          return ["fc-event-reminder"];
+        }
+        return []; // Aplica estilos por defecto
+      },
+      // La propiedad 'events' ahora está vacía.
+      // Aquí es donde podrías inyectar eventos dinámicamente desde Flask:
+      events: [], // Calendario vacío por defecto
+
+      eventClick: function (info) {
+        const props = info.event.extendedProps;
+
+        document.getElementById("modalTitle").textContent = info.event.title;
+        document.getElementById("modalDescription").textContent =
+          props.description || "No hay descripción disponible.";
+
+        const eventDate = info.event.start.toLocaleDateString("es-ES", {
+          day: "numeric",
+          month: "long",
+          year: "numeric",
+        });
+        const eventTime = info.event.allDay
+          ? "Todo el día"
+          : info.event.start.toLocaleTimeString("es-ES", {
+              hour: "2-digit",
+              minute: "2-digit",
+            });
+
+        document.getElementById("modalDate").textContent = eventDate;
+        document.getElementById("modalTime").textContent = eventTime;
+
+        document.getElementById("modalImage").src =
+          props.imageUrl ||
+          "https://placehold.co/600x400/2a2623/f1e1c1?text=Actividad"; // Imagen por defecto
+        document.getElementById("modalGroup").textContent =
+          props.group || "No especificado";
+        document.getElementById("modalParticipants").textContent =
+          props.participants || "No especificado";
+
+        if (props.cost > 0) {
+          document.getElementById("modalCost").textContent = `₡${props.cost}`;
+        } else {
+          document.getElementById("modalCost").textContent = "Gratis";
+        }
+
+        eventDetailModal.show();
+      },
+    });
+
+    calendar.render();
+  });
+</script>
+{% endblock %}

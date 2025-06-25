@@ -1,0 +1,504 @@
+{% extends "private/private_layout.html" %} {% block title %}Gestión de Usuarios
+- Parroquia{% endblock %} {% block head_extra %}
+<style>
+  .form-container {
+    background: var(--glass-bg);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-radius: 15px;
+    padding: 40px;
+    border: 1px solid rgba(241, 225, 193, 0.2);
+  }
+
+  .form-label {
+    font-weight: 600;
+  }
+
+  .form-control,
+  .form-select {
+    background-color: rgba(0, 0, 0, 0.3);
+    border: 1px solid rgba(241, 225, 193, 0.3);
+    color: var(--light-gold);
+    border-radius: 8px;
+  }
+
+  .form-control:focus,
+  .form-select:focus {
+    background-color: rgba(0, 0, 0, 0.5);
+    color: #ffffff;
+    border-color: var(--accent-gold);
+    box-shadow: 0 0 0 0.25rem rgba(212, 183, 144, 0.25);
+  }
+
+  .form-select option {
+    background: var(--dark-brown);
+  }
+
+  .form-check-input:checked {
+    background-color: var(--accent-gold);
+    border-color: var(--accent-gold);
+  }
+
+  .drop-zone {
+    border: 2px dashed rgba(241, 225, 193, 0.4);
+    border-radius: 15px;
+    padding: 30px;
+    text-align: center;
+    color: rgba(241, 225, 193, 0.7);
+    cursor: pointer;
+    transition: all 0.3s ease;
+  }
+
+  .drop-zone.dragover {
+    border-color: var(--light-gold);
+    background-color: rgba(241, 225, 193, 0.1);
+  }
+
+  .file-preview {
+    display: none;
+    background: rgba(0, 0, 0, 0.3);
+    margin-top: 15px;
+    padding: 15px;
+    border-radius: 10px;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .file-preview.active {
+    display: flex;
+  }
+
+  .file-info {
+    color: var(--light-gold);
+    overflow: hidden;
+  }
+  .file-info__name {
+    font-weight: 600;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    max-width: 90%;
+  }
+
+  .file-info__size {
+    font-size: 0.9rem;
+    opacity: 0.8;
+  }
+
+  .remove-file-btn {
+    background: none;
+    border: none;
+    color: #ff6b6b;
+    font-size: 1.2rem;
+    cursor: pointer;
+    transition: color 0.3s;
+  }
+  .remove-file-btn:hover {
+    color: #ff4757;
+  }
+
+  .form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 15px;
+    margin-top: 20px;
+  }
+
+  .btn-submit,
+  .btn-cancel {
+    border: none;
+    padding: 10px 30px;
+    font-weight: 600;
+    border-radius: 50px;
+    text-decoration: none;
+    transition: all 0.3s ease;
+  }
+
+  .btn-submit {
+    background: linear-gradient(45deg, var(--accent-gold), #e7d3b0);
+    color: var(--dark-brown);
+  }
+  .btn-submit:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+  }
+
+  .btn-cancel {
+    background: #4a2a2a;
+    color: #ffc0c0;
+    border: 1px solid #d88282;
+  }
+  .btn-cancel:hover {
+    background: #d88282;
+    color: #fff;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(216, 130, 130, 0.2);
+  }
+</style>
+{% endblock %} {% block sidebar_menu_items %} {# Aquí podrías agregar items
+adicionales al menú lateral si son específicos de alguna vista #}
+<script>
+  // Resalta el enlace "Usuarios" en el sidebar
+  document.addEventListener("DOMContentLoaded", function () {
+    const sidebarLinks = document.querySelectorAll("#sidebar ul li a");
+    sidebarLinks.forEach((link) => {
+      if (
+        link.getAttribute("href") === '{{ url_for("index.inicio_dashboard") }}'
+      ) {
+        link.classList.add("active");
+      } else {
+        link.classList.remove("active");
+      }
+    });
+  });
+</script>
+{% endblock %} {% block content %}
+<div class="page-header">
+  <h2 class="page-title">Agregar Nuevo Usuario</h2>
+</div>
+<div class="title-divider"></div>
+
+<div class="form-container">
+  <form method="POST" action="{{ url_for('usuarios.agregar_usuario') }}">
+    {# Asume una ruta para procesar el formulario #}
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <label for="name" class="form-label">Nombre</label>
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          required
+        />
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="lastName1" class="form-label">Primer Apellido</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lastName1"
+          name="lastName1"
+          required
+        />
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="lastName2" class="form-label">Segundo Apellido</label>
+        <input
+          type="text"
+          class="form-control"
+          id="lastName2"
+          name="lastName2"
+          required
+        />
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="email" class="form-label">Correo Electrónico</label>
+      <input
+        type="email"
+        class="form-control"
+        id="email"
+        name="email"
+        required
+      />
+    </div>
+
+    <div class="row">
+      <div class="col-md-6 mb-3">
+        <label class="form-label">Género</label>
+        <div class="pt-2">
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              id="genderMale"
+              value="hombre"
+            />
+            <label class="form-check-label" for="genderMale">Hombre</label>
+          </div>
+          <div class="form-check form-check-inline">
+            <input
+              class="form-check-input"
+              type="radio"
+              name="gender"
+              id="genderFemale"
+              value="mujer"
+            />
+            <label class="form-check-label" for="genderFemale">Mujer</label>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6 mb-3">
+        <label for="maritalStatus" class="form-label">Estado Civil</label>
+        <select class="form-select" id="maritalStatus" name="maritalStatus">
+          <option selected value="">Seleccionar...</option>
+          <option value="soltero">Soltero(a)</option>
+          <option value="casado">Casado(a)</option>
+          <option value="viudo">Viudo(a)</option>
+          <option value="divorciado">Divorciado(a)</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        <label for="nationality" class="form-label">Nacionalidad</label>
+        <select class="form-select" id="nationality" name="nationality">
+          <option selected value="">Seleccionar...</option>
+          <option value="cr">Costarricense</option>
+          <option value="ni">Nicaragüense</option>
+          <option value="pa">Panameño(a)</option>
+          <option value="otro">Otro</option>
+        </select>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="province" class="form-label">Provincia</label>
+        <select class="form-select" id="province" name="province">
+          <option selected value="">Seleccionar...</option>
+          {# Opciones de provincia se llenarán con JavaScript #}
+        </select>
+      </div>
+      <div class="col-md-4 mb-3">
+        <label for="canton" class="form-label">Cantón</label>
+        <select class="form-select" id="canton" name="canton">
+          <option selected value="">Seleccionar...</option>
+          {# Opciones de provincia se llenarán con JavaScript #}
+        </select>
+      </div>
+    </div>
+
+    <div class="mb-3">
+      <label for="address" class="form-label">Dirección Exacta</label>
+      <textarea
+        class="form-control"
+        id="address"
+        name="address"
+        rows="2"
+      ></textarea>
+    </div>
+
+    <div class="mb-3">
+      <label for="phone" class="form-label">Teléfono</label>
+      <input type="tel" class="form-control" id="phone" name="phone" />
+    </div>
+
+    <div class="mb-4">
+      <label class="form-label">Foto de Perfil (Opcional)</label>
+      <div id="drop-zone" class="drop-zone">
+        <i class="fas fa-camera drop-zone__icon"></i>
+        <p>Arrastra una imagen o haz clic para seleccionar</p>
+      </div>
+      <div id="file-preview" class="file-preview"></div>
+      <input
+        type="file"
+        id="file-upload"
+        name="profile_picture"
+        hidden
+        accept="image/*"
+      />
+    </div>
+
+    <hr style="border-color: rgba(241, 225, 193, 0.2)" />
+
+    <div class="form-check form-switch fs-5 mt-4">
+      <input
+        class="form-check-input"
+        type="checkbox"
+        role="switch"
+        id="isAppUser"
+        name="isAppUser"
+      />
+      <label class="form-check-label" for="isAppUser"
+        >¿Es usuario de la aplicación?</label
+      >
+    </div>
+
+    <div class="form-actions mt-4">
+      <a href="{{ url_for('usuarios.usuarios') }}" class="btn btn-cancel"
+        >Cancelar</a
+      >
+      {# Vuelve a la lista de usuarios #}
+      <button type="submit" class="btn btn-submit">Guardar Usuario</button>
+    </div>
+  </form>
+</div>
+{% endblock %} {% block scripts_extra %}
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    // Lógica para Dropdowns dinámicos de Provincia/Cantón
+    const provinces = {
+      "San José": [
+        "San José",
+        "Escazú",
+        "Desamparados",
+        "Puriscal",
+        "Tarrazú",
+        "Aserrí",
+        "Mora",
+        "Goicoechea",
+        "Santa Ana",
+        "Alajuelita",
+        "Vázquez de Coronado",
+        "Acosta",
+        "Tibás",
+        "Moravia",
+        "Montes de Oca",
+        "Turrubares",
+        "Dota",
+        "Curridabat",
+        "Pérez Zeledón",
+        "León Cortés Castro",
+      ],
+      Alajuela: [
+        "Alajuela",
+        "San Ramón",
+        "Grecia",
+        "San Mateo",
+        "Atenas",
+        "Naranjo",
+        "Palmares",
+        "Poás",
+        "Orotina",
+        "San Carlos",
+        "Zarcero",
+        "Sarchí",
+        "Upala",
+        "Los Chiles",
+        "Guatuso",
+        "Río Cuarto",
+      ],
+      Cartago: [
+        "Cartago",
+        "Paraíso",
+        "La Unión",
+        "Jiménez",
+        "Turrialba",
+        "Alvarado",
+        "Oreamuno",
+        "El Guarco",
+      ],
+      Heredia: [
+        "Heredia",
+        "Barva",
+        "Santo Domingo",
+        "Santa Bárbara",
+        "San Rafael",
+        "San Isidro",
+        "Belén",
+        "Flores",
+        "San Pablo",
+        "Sarapiquí",
+      ],
+      Guanacaste: [
+        "Liberia",
+        "Nicoya",
+        "Santa Cruz",
+        "Bagaces",
+        "Carrillo",
+        "Cañas",
+        "Abangares",
+        "Tilarán",
+        "Nandayure",
+        "La Cruz",
+        "Hojancha",
+      ],
+      Puntarenas: [
+        "Puntarenas",
+        "Esparza",
+        "Buenos Aires",
+        "Montes de Oro",
+        "Osa",
+        "Quepos",
+        "Golfito",
+        "Coto Brus",
+        "Parrita",
+        "Corredores",
+        "Garabito",
+      ],
+      Limón: ["Limón", "Pococí", "Siquirres", "Talamanca", "Matina", "Guácimo"],
+    };
+
+    const provinceSelect = document.getElementById("province");
+    const cantonSelect = document.getElementById("canton");
+
+    Object.keys(provinces).forEach((province) => {
+      const option = new Option(province, province);
+      provinceSelect.add(option);
+    });
+
+    provinceSelect.addEventListener("change", (e) => {
+      const selectedProvince = e.target.value;
+      cantonSelect.innerHTML = "";
+      if (selectedProvince && provinces[selectedProvince]) {
+        cantonSelect.disabled = false;
+        cantonSelect.innerHTML =
+          '<option selected value="">Seleccionar...</option>';
+        provinces[selectedProvince].forEach((canton) => {
+          const option = new Option(canton, canton);
+          cantonSelect.add(option);
+        });
+      } else {
+        cantonSelect.disabled = true;
+        cantonSelect.innerHTML =
+          "<option>Primero seleccione provincia</option>";
+      }
+    });
+
+    // Lógica para el Drop Zone
+    const dropZone = document.getElementById("drop-zone");
+    const fileUpload = document.getElementById("file-upload");
+    const filePreview = document.getElementById("file-preview");
+
+    function handleFile(file) {
+      if (file) {
+        filePreview.innerHTML = `
+                    <div class="file-info">
+                        <div class="file-info__name">${file.name}</div>
+                        <div class="file-info__size">${(
+                          file.size / 1024
+                        ).toFixed(2)} KB</div>
+                    </div>
+                    <button type="button" class="remove-file-btn"><i class="fas fa-times"></i></button>
+                `;
+        dropZone.style.display = "none";
+        filePreview.classList.add("active");
+
+        filePreview
+          .querySelector(".remove-file-btn")
+          .addEventListener("click", removeFile);
+      }
+    }
+
+    function removeFile() {
+      fileUpload.value = ""; // Resetea el input de tipo file
+      dropZone.style.display = "block";
+      filePreview.classList.remove("active");
+    }
+
+    dropZone.addEventListener("click", () => fileUpload.click());
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZone.classList.add("dragover");
+    });
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.classList.remove("dragover");
+    });
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropZone.classList.remove("dragover");
+      if (e.dataTransfer.files.length) {
+        fileUpload.files = e.dataTransfer.files;
+        handleFile(e.dataTransfer.files[0]);
+      }
+    });
+    fileUpload.addEventListener("change", () => {
+      if (fileUpload.files.length) {
+        handleFile(fileUpload.files[0]);
+      }
+    });
+  });
+</script>
+{% endblock %}
